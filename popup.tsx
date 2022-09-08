@@ -1,27 +1,24 @@
-import { useState } from "react"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
-      }}>
-      <h2>
-        Welcome to your{" "}
-        <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
-    </div>
+    <form style={{ width: "max-content" }} className="p-3">
+      <div className="form-group row">
+        <label>
+          Author
+          <input type="text" className="form-control" aria-describedby="authorHelp" placeholder="Enter author"></input>
+        </label>
+        <small id="authorHelp" className="form-text text-muted">Used to generate file names.</small>
+      </div>
+      <div className="form-group row">
+        <label>
+          Title
+          <input type="text" className="form-control" aria-describedby="titleHelp" placeholder="Enter title"></input>
+        </label>
+        <small id="titleHelp" className="form-text text-muted">Used to generate file names.</small>
+      </div>
+      <button type="button" className="btn btn-dark mt-3">Generate</button>
+    </form>
   )
 }
 
