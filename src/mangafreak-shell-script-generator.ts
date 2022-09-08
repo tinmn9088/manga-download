@@ -5,7 +5,7 @@ export class MangafreakShellScriptGenerator implements ShellScriptGenerator {
 
   generate(title: string, author: string, result: string[] = []): string[] {
     result.push(`# make copy`);
-    result.push(`mkdir next; cp -rv {1..11} next/; cd next;\n`);
+    result.push('list=`ls`; mkdir next; cp -rv $list next/; cd next;\n');
 
     result.push(`# unzip`);
     result.push('for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do unzip $ch -d "${ch%.*}"; rm $ch; done; cd ..; done;\n');
