@@ -1,11 +1,10 @@
 import type { Volume } from "./models/volume";
 
-export class Generator {
+export class WgetGenerator {
 
-  static generate(volumes: Volume[]): string[] {
+  static generate(volumes: Volume[], result: string[] = []): string[] {
     let volumeNumberLength: number = Math.max(...volumes.map(volume => volume.number.length));
     let chapterNumberLength: number = Math.max(...volumes.map(volume => volume.urls.length.toString().length)); 
-    let result: string[] = [];
 
     volumes.forEach(volume => {
       result.push(`# ${volume.number}`);
@@ -20,6 +19,8 @@ export class Generator {
       });
 
       result.push(`cd ..;\n`);
+
+
     });
 
     return result;

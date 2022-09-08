@@ -4,9 +4,6 @@ import type { Processor } from "./processor";
 
 export class ProcessorProvider {
 
-  /**
-   * Processor depends 
-   */
   static provide(): Processor {
     let href: string = location.href;
     switch (true) {

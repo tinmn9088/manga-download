@@ -1,7 +1,7 @@
 {
   "name": "manga-download",
   "displayName": "Manga download",
-  "version": "0.0.0",
+  "version": "0.0.9",
   "description": "Generate bash-script to download manga and convert to PDF.",
   "author": "tinmn9088",
   "packageManager": "npm@8.15.0",
