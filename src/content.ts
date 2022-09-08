@@ -4,7 +4,9 @@ import type { Volume } from "~src/models/volume";
 import type { Processor } from "~src/processor";
 import { MangafreakProcessor } from "./mangafreak-processor";
 
-export const config: PlasmoContentScript = {};
+export const config: PlasmoContentScript = {
+  matches: ["https://mangabook.org/*", "https://w13.mangafreak.net/*"]
+};
 
 let processor: Processor = new MangafreakProcessor(15);
 
