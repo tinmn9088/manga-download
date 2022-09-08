@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Generator } from "~src/generator";
-import type { Volume } from "./models/volume";
 
 function IndexPopup() {
 
