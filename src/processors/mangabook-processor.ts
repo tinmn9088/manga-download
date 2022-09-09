@@ -1,5 +1,5 @@
-import type { Chapter } from "./models/chapter";
-import type { Volume } from "./models/volume";
+import type { Chapter } from "../models/chapter";
+import type { Volume } from "../models/volume";
 import type { Processor } from "./processor";
 
 export class MangabookProcessor implements Processor {

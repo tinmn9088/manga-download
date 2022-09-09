@@ -1,9 +1,11 @@
-import type { Volume } from "./models/volume";
 import type { ShellScriptGenerator } from "./shell-script-generator";
 
 export class MangafreakShellScriptGenerator implements ShellScriptGenerator {
 
-  generate(title: string, author: string, result: string[] = []): string[] {
+  generate(info: any, result: string[] = []): string[] {
+    const author: string = info.author || "";
+    const title: string = info.title || "";
+
     result.push(`# make copy`);
     result.push('list=`ls`; mkdir next; cp -rv $list next/; cd next;\n');
 

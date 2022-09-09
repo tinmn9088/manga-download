@@ -1,4 +1,4 @@
-import type { Volume } from "./models/volume";
+import type { Volume } from "../models/volume";
 
 export class WgetGenerator {
 
@@ -19,8 +19,6 @@ export class WgetGenerator {
       });
 
       result.push(`cd ..;\n`);
-
-
     });
 
     return result;
