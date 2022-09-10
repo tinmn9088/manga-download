@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
       let domVolumeParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
 
       if (!domVolumeParser) {
-        throw new Error(`No processor found (${currentUrl})`);
+        throw new Error(`No DOMVolumeParser found (${currentUrl})`);
       }
 
       let response: {volumes: Volume[], url: string} = {volumes: domVolumeParser.parse(), url: currentUrl};
