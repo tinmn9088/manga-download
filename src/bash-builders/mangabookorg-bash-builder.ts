@@ -1,10 +1,11 @@
-import type { BashBuilder } from "./bash-builder";
+import { BashBuilder } from "./bash-builder";
 
-export class MangabookOrgBashBuilder implements BashBuilder {
+export class MangabookOrgBashBuilder extends BashBuilder {
 
-  build(info: any, result: string[] = []): string[] {
+  buildConvert(info: any): string[] {
     const author: string = info.author || "";
     const title: string = info.title || "";
+    let result: string[] = [];
 
     result.push(`# make copy`);
     result.push('list=`ls`; mkdir next; cp -rv $list next/; cd next;\n');

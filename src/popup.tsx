@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { WgetBashBuilder } from "./bash-builders/wget-bash-builder";
+import type { BashBuilder } from "./bash-builders/bash-builder";
 import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {
@@ -37,13 +37,13 @@ function IndexPopup() {
           warning.classList.add("alert-success");
           warning.classList.remove("d-none");
           setTimeout(() => {            
-            let result: string[];
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value;
             let title: string = (document.getElementById("titleInput") as HTMLInputElement).value;
 
-            result = WgetBashBuilder.build(response.volumes);
-            result = SupportedUrl.get(response.url)
-              .bashBuilder().build({title: title || "Author", author: author || "Title"}, result);
+            let bashBuilder: BashBuilder = SupportedUrl.get(response.url).bashBuilder();
+            let result: string[] = []
+              .concat(bashBuilder.buildWget(response.volumes))
+              .concat(bashBuilder.buildConvert({title: title || "Author", author: author || "Title"}));
 
             let content: Blob = new Blob([result.join("\n")], {type: "text/plain"});
             saveFile(`${author ? author.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}${title ? title.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}manga-download.sh`, content);
