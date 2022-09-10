@@ -13,13 +13,13 @@ window.addEventListener("load", () => {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       let currentUrl: string = location.href;
-      let domParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
+      let domVolumeParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
 
-      if (!domParser) {
+      if (!domVolumeParser) {
         throw new Error(`No processor found (${currentUrl})`);
       }
 
-      let response: {volumes: Volume[], url: string} = {volumes: domParser.parse(), url: currentUrl};
+      let response: {volumes: Volume[], url: string} = {volumes: domVolumeParser.parse(), url: currentUrl};
       console.log("Response", response);
       sendResponse(response);
     }
