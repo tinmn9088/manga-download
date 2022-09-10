@@ -38,15 +38,15 @@ function IndexPopup() {
           warning.classList.remove("d-none");
           setTimeout(() => {            
             let result: string[];
-            let author: string = (document.getElementById("authorInput") as HTMLInputElement).value || "Author";
-            let title: string = (document.getElementById("titleInput") as HTMLInputElement).value || "Title";
+            let author: string = (document.getElementById("authorInput") as HTMLInputElement).value;
+            let title: string = (document.getElementById("titleInput") as HTMLInputElement).value;
 
             result = WgetBashBuilder.build(response.volumes);
             result = SupportedUrl.get(response.url)
-              .bashBuilder().build({title: title, author: author}, result);
+              .bashBuilder().build({title: title || "Author", author: author || "Title"}, result);
 
             let content: Blob = new Blob([result.join("\n")], {type: "text/plain"});
-            saveFile("manga-download.sh", content);
+            saveFile(`${author ? author.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}${title ? title.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}manga-download.sh`, content);
           }, 2000);
         }        
       });
