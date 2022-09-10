@@ -15,25 +15,27 @@ function IndexPopup() {
     chrome.tabs.query({active: true, currentWindow: true, lastFocusedWindow: true}, function(tabs) {
       let currentUrl: string = tabs[0].url;
       let warning: HTMLElement = document.getElementById("warning");
-      warning.classList.remove("d-none");
       warning.classList.remove("alert-danger");
       warning.classList.remove("alert-success");
 
       // active tab url is not supported
       if (!SupportedUrl.get(currentUrl)) {
-        warning.classList.add("alert-danger");
         warning.innerText = "Not supported";
+        warning.classList.add("alert-danger");
+        warning.classList.remove("d-none");
         return;
       }
 
       chrome.tabs.sendMessage(tabs[0].id, "generate", function(response) {
         if (!response || response?.volumes?.length === 0) {
-          warning.classList.add("alert-danger");
           warning.innerText = "No volumes found";
+          warning.classList.add("alert-danger");
+          warning.classList.remove("d-none");
           return;
         } else {
-          warning.classList.add("alert-success");
           warning.innerText = `Volumes found: ${response.volumes.length}`;
+          warning.classList.add("alert-success");
+          warning.classList.remove("d-none");
           setTimeout(() => {            
             let result: string[];
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value || "Author";
