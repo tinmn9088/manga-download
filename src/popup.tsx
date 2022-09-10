@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { WgetBashBuilder } from "./builders/wget-bash-builder";
+import { WgetBashBuilder } from "./bash-builders/wget-bash-builder";
 import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {

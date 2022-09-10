@@ -1,6 +1,6 @@
-import { MangabookOrgBashBuilder } from "./builders/mangabookorg-bash-builder";
-import { W13MangafreakNetBashBuilder } from "./builders/w13mangafreaknet-bash-builder";
-import type { BashBuilder } from "./builders/bash-builder";
+import { MangabookOrgBashBuilder } from "./bash-builders/mangabookorg-bash-builder";
+import { W13MangafreakNetBashBuilder } from "./bash-builders/w13mangafreaknet-bash-builder";
+import type { BashBuilder } from "./bash-builders/bash-builder";
 import { MangabookOrgDOMVolumeParser } from "./dom/parsers/mangabookorg-dom-volume-parser";
 import { W13MangafreakNetDOMVolumeParser } from "./dom/parsers/w13mangafreaknet-dom-volume-parser";
 import type { DOMVolumeParser } from "./dom/parsers/dom-volume-parser";
