@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { WgetGenerator } from "./generators/wget-generator";
-import { SupportedUrl } from "./supported-urls";
+import { WgetBashBuilder } from "./builders/wget-bash-builder";
+import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {
 
@@ -39,10 +39,9 @@ function IndexPopup() {
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value || "Author";
             let title: string = (document.getElementById("titleInput") as HTMLInputElement).value || "Title";
 
-            result = WgetGenerator.generate(response.volumes);
+            result = WgetBashBuilder.build(response.volumes);
             result = SupportedUrl.get(response.url)
-              .shellScriptGenerator()
-              .generate({title: title, author: author}, result);
+              .bashBuilder().build({title: title, author: author}, result);
 
             let content: Blob = new Blob([result.join("\n")], {type: "text/plain"});
             saveFile("manga-download.sh", content);

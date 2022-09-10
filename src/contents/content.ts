@@ -1,7 +1,7 @@
 import type { PlasmoContentScript } from "plasmo"
-import { SupportedUrl } from "~src/supported-urls";
+import { SupportedUrl } from "../supported-url";
 import type { Volume } from "../models/volume";
-import type { Processor } from "../processors/processor";
+import type { DOMVolumeParser } from "../dom/parsers/dom-volume-parser";
 
 export const config: PlasmoContentScript = {
   matches: ["https://mangabook.org/*", "https://w13.mangafreak.net/*"]
@@ -13,13 +13,13 @@ window.addEventListener("load", () => {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       let currentUrl: string = location.href;
-      let processor: Processor = SupportedUrl.get(currentUrl)?.processor();
+      let domParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
 
-      if (!processor) {
+      if (!domParser) {
         throw new Error(`No processor found (${currentUrl})`);
       }
 
-      let response: {volumes: Volume[], url: string} = {volumes: processor.process(), url: currentUrl};
+      let response: {volumes: Volume[], url: string} = {volumes: domParser.parse(), url: currentUrl};
       console.log("Response", response);
       sendResponse(response);
     }

@@ -1,10 +1,10 @@
-import type { Chapter } from "../models/chapter";
-import type { Volume } from "../models/volume";
-import type { Processor } from "./processor";
+import type { Chapter } from "../../models/chapter";
+import type { Volume } from "../../models/volume";
+import type { DOMVolumeParser } from "./dom-volume-parser";
 
-export class MangabookProcessor implements Processor {
+export class MangabookOrgDOMVolumeParser implements DOMVolumeParser {
 
-  process(): Volume[] {
+  parse(): Volume[] {
 
     // receive nodes that store download links
     let nodeList: NodeListOf<Element> = document.querySelectorAll(`div[class*="chapters-elem-download"]`);

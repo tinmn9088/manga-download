@@ -1,8 +1,8 @@
 import type { Volume } from "../models/volume";
 
-export class WgetGenerator {
+export class WgetBashBuilder {
 
-  static generate(volumes: Volume[], result: string[] = []): string[] {
+  static build(volumes: Volume[], result: string[] = []): string[] {
     let volumeNumberLength: number = Math.max(...volumes.map(volume => volume.number.length));
     let chapterNumberLength: number = Math.max(...volumes.map(volume => volume.urls.length.toString().length)); 
 

@@ -1,8 +1,8 @@
-import type { ShellScriptGenerator } from "./shell-script-generator";
+import type { BashBuilder } from "./bash-builder";
 
-export class MangabookShellScriptGenerator implements ShellScriptGenerator {
+export class MangabookOrgBashBuilder implements BashBuilder {
 
-  generate(info: any, result: string[] = []): string[] {
+  build(info: any, result: string[] = []): string[] {
     const author: string = info.author || "";
     const title: string = info.title || "";
 

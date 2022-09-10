@@ -1,8 +1,8 @@
-import type { Chapter } from "../models/chapter";
-import type { Volume } from "../models/volume";
-import type { Processor } from "./processor";
+import type { Chapter } from "../../models/chapter";
+import type { Volume } from "../../models/volume";
+import type { DOMVolumeParser } from "./dom-volume-parser";
 
-export class MangafreakProcessor implements Processor {
+export class W13MangafreakNetDOMVolumeParser implements DOMVolumeParser {
 
   constructor(private _volumeSize: number) {
   }
@@ -11,7 +11,7 @@ export class MangafreakProcessor implements Processor {
     return this._volumeSize;
   }
 
-  process(): Volume[] {
+  parse(): Volume[] {
 
     // receive nodes that store download links
     let nodeList: NodeListOf<Element> = document.querySelectorAll(`div[class="manga_series_list"] a[download]`);
