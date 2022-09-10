@@ -1,8 +1,8 @@
 import type { Volume } from "~src/models/volume";
 
-export abstract class BashBuilder {
+export abstract class BashGenerator {
 
-  buildWget(volumes: Volume[]): string[] {
+  generateWget(volumes: Volume[]): string[] {
     let volumeNumberLength: number = Math.max(...volumes.map(volume => volume.number.length));
     let chapterNumberLength: number = Math.max(...volumes.map(volume => volume.urls.length.toString().length)); 
     let result: string[] = [];
@@ -25,5 +25,5 @@ export abstract class BashBuilder {
     return result;
   }
 
-  abstract buildConvert(info: any): string[];
+  abstract generateConvert(info: any): string[];
 }

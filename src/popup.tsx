@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import type { BashBuilder } from "./bash-builders/bash-builder";
+import type { BashGenerator } from "./bash-generators/bash-generator";
 import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {
@@ -40,10 +40,10 @@ function IndexPopup() {
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value;
             let title: string = (document.getElementById("titleInput") as HTMLInputElement).value;
 
-            let bashBuilder: BashBuilder = SupportedUrl.get(response.url).bashBuilder();
+            let bashGenerator: BashGenerator = SupportedUrl.get(response.url).bashGenerator();
             let result: string[] = []
-              .concat(bashBuilder.buildWget(response.volumes))
-              .concat(bashBuilder.buildConvert({title: title || "Author", author: author || "Title"}));
+              .concat(bashGenerator.generateWget(response.volumes))
+              .concat(bashGenerator.generateConvert({title: title || "Author", author: author || "Title"}));
 
             let content: Blob = new Blob([result.join("\n")], {type: "text/plain"});
             saveFile(`${author ? author.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}${title ? title.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}manga-download.sh`, content);

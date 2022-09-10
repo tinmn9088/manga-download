@@ -1,6 +1,6 @@
-import { MangabookOrgBashBuilder } from "./bash-builders/mangabookorg-bash-builder";
-import { W13MangafreakNetBashBuilder } from "./bash-builders/w13mangafreaknet-bash-builder";
-import type { BashBuilder } from "./bash-builders/bash-builder";
+import { MangabookOrgBashGenerator } from "./bash-generators/mangabookorg-bash-generator";
+import { W13MangafreakNetBashGenerator } from "./bash-generators/w13mangafreaknet-bash-generator";
+import type { BashGenerator } from "./bash-generators/bash-generator";
 import { MangabookOrgDOMVolumeParser } from "./dom/parsers/mangabookorg-dom-volume-parser";
 import { W13MangafreakNetDOMVolumeParser } from "./dom/parsers/w13mangafreaknet-dom-volume-parser";
 import type { DOMVolumeParser } from "./dom/parsers/dom-volume-parser";
@@ -12,19 +12,19 @@ export class SupportedUrl {
   static {
     this.set(/^https:\/\/mangabook\.org.*/,
                 () => new MangabookOrgDOMVolumeParser(),
-                () => new MangabookOrgBashBuilder());
+                () => new MangabookOrgBashGenerator());
     this.set(/^https:\/\/w13\.mangafreak\.net.*/,
                 () => new W13MangafreakNetDOMVolumeParser(15),
-                () => new W13MangafreakNetBashBuilder());  
+                () => new W13MangafreakNetBashGenerator());  
   }
 
   private constructor(public readonly urlRegExp: RegExp,
                       public readonly domVolumeParser: () => DOMVolumeParser, 
-                      public readonly bashBuilder: () => BashBuilder) {
+                      public readonly bashGenerator: () => BashGenerator) {
   }
 
-  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, bashBuilder: () => BashBuilder) {
-    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, bashBuilder);
+  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, bashGenerator: () => BashGenerator) {
+    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, bashGenerator);
     SupportedUrl.values.set(urlRegExp, newUrl);
   }
 

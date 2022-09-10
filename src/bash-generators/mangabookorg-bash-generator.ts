@@ -1,8 +1,8 @@
-import { BashBuilder } from "./bash-builder";
+import { BashGenerator } from "./bash-generator";
 
-export class W13MangafreakNetBashBuilder extends BashBuilder {
+export class MangabookOrgBashGenerator extends BashGenerator {
 
-  buildConvert(info: any): string[] {
+  generateConvert(info: any): string[] {
     const author: string = info.author || "";
     const title: string = info.title || "";
     let result: string[] = [];
@@ -13,12 +13,6 @@ export class W13MangafreakNetBashBuilder extends BashBuilder {
     result.push(`# unzip`);
     result.push('for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do unzip $ch -d "${ch%.*}"; rm $ch; done; cd ..; done;\n');
 
-    result.push(`# [mangafreak] remove image file name prefix with manga name`);
-    result.push('for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do cd $ch; for img in `ls`; do mv -v $img "${img##*_}"; done; cd ..; done; cd ..; done;\n');
-
-    result.push(`# [mangafreak] add leading zeroes`);
-    result.push("for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do cd $ch; for img in `ls`; do mv -v $img $(printf '%03d.%s' ${img%.*} ${img##*.}); done; cd ..; done; cd ..; done;\n");
-    
     result.push(`# add image file name prefix with chapter number`);
     result.push('for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do cd $ch; for img in `ls`; do mv -v $img "${ch}__${img}"; done; cd ..; done; cd ..; done;\n');
 
@@ -26,7 +20,7 @@ export class W13MangafreakNetBashBuilder extends BashBuilder {
     result.push('for vol in `ls`; do cd $vol; pwd; for ch in `ls`; do cd $ch; for img in `ls`; do mv -v $img ..; done; cd ..; rm -r $ch; done; cd ..; done;\n');
 
     result.push(`# convert to pdf`);
-    result.push('for vol in `ls`; do cd $vol; pwd; convert * "$(printf \'' + author + '. ' + title + '. - %02d.pdf\' ${vol})"; cd ..; done;\n');
+    result.push('for vol in `ls`; do cd $vol; pwd; convert * "$(printf \'' + author + '. ' + title + '. - %02d.pdf\' ${vol})"; cd ..; done;\n');    
 
     return result;
   }
