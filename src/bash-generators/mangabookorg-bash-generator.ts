@@ -1,6 +1,6 @@
-import { BashGenerator } from "./bash-generator";
+import { BashGeneratorWithWget } from "./bash-generator-with-wget";
 
-export class MangabookOrgBashGenerator extends BashGenerator {
+export class MangabookOrgBashGenerator extends BashGeneratorWithWget {
 
   generateConvert(info: any): string[] {
     const author: string = info.author || "";
