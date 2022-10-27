@@ -42,6 +42,7 @@ function IndexPopup() {
 
             let bashGenerator: BashGenerator = SupportedUrl.get(response.url).bashGenerator();
             let result: string[] = []
+              .concat(bashGenerator.generateBeginning())
               .concat(bashGenerator.generateWget(response.volumes))
               .concat(bashGenerator.generateConvert({title: title || "Author", author: author || "Title"}));
 

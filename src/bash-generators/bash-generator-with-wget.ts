@@ -26,5 +26,7 @@ export abstract class BashGeneratorWithWget implements BashGenerator {
     return result;
   }
 
+  abstract generateBeginning(): string[];
+
   abstract generateConvert(info: any): string[];
 }

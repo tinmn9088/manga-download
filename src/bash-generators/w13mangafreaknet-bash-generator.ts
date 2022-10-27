@@ -2,6 +2,16 @@ import { BashGeneratorWithWget } from "./bash-generator-with-wget";
 
 export class W13MangafreakNetBashGenerator extends BashGeneratorWithWget {
 
+  generateBeginning(): string[] {
+    let result: string[] = [];
+
+    result.push(`#!/bin/bash\n`);
+    result.push(`command -v unzip &> /dev/null || { echo "unzip not found"; exit 100; }`);
+    result.push(`command -v convert &> /dev/null || { echo "ImageMagick convert not found"; exit 101; }\n`);
+
+    return result;
+  }
+
   generateConvert(info: any): string[] {
     const author: string = info.author || "";
     const title: string = info.title || "";
