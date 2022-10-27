@@ -13,14 +13,14 @@ export abstract class BashGeneratorWithWget implements BashGenerator {
       result.push(`mkdir ${volume.number};`);
       result.push(`cd ${volume.number};`);
 
-      let volumeNumber: string = volume.number.padStart(volumeNumberLength, '0');
+      let volumeNumber: string = volume.number.padStart(volumeNumberLength, "0");
 
       volume.urls.forEach((url, index) => {
-        let chapterNumber = (index + 1).toString().padStart(chapterNumberLength, '0');
+        let chapterNumber = (index + 1).toString().padStart(chapterNumberLength, "0");
         result.push(`wget ${url} -O ${volumeNumber}_${chapterNumber}.zip;`);
       });
 
-      result.push(`cd ..;\n`);
+      result.push("cd ..;\n");
     });
 
     return result;
