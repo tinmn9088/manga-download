@@ -20,7 +20,7 @@ export abstract class BashGeneratorWithWget implements BashGenerator {
         result.push(`wget ${url} -O ${volumeNumber}_${chapterNumber}.zip;`);
       });
 
-      result.push("cd ..;\n");
+      result.push(`cd ..;\n`);
     });
 
     return result;
