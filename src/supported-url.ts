@@ -1,6 +1,6 @@
-import { MangabookOrgBashGenerator } from "./bash-generators/mangabookorg-bash-generator";
-import { W13MangafreakNetBashGenerator } from "./bash-generators/w13mangafreaknet-bash-generator";
-import type { BashGenerator } from "./bash-generators/bash-generator";
+import { MangabookOrgBashGenerator } from "./script-generators/mangabookorg-bash-generator";
+import { W13MangafreakNetBashGenerator } from "./script-generators/w13mangafreaknet-bash-generator";
+import type { ScriptGenerator } from "./script-generators/script-generator";
 import { MangabookOrgDOMVolumeParser } from "./dom/parsers/mangabookorg-dom-volume-parser";
 import { W13MangafreakNetDOMVolumeParser } from "./dom/parsers/w13mangafreaknet-dom-volume-parser";
 import type { DOMVolumeParser } from "./dom/parsers/dom-volume-parser";
@@ -20,11 +20,11 @@ export class SupportedUrl {
 
   private constructor(public readonly urlRegExp: RegExp,
                       public readonly domVolumeParser: () => DOMVolumeParser, 
-                      public readonly bashGenerator: () => BashGenerator) {
+                      public readonly scriptGenerator: () => ScriptGenerator) {
   }
 
-  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, bashGenerator: () => BashGenerator) {
-    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, bashGenerator);
+  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, scriptGenerator: () => ScriptGenerator) {
+    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, scriptGenerator);
     SupportedUrl.values.set(urlRegExp, newUrl);
   }
 

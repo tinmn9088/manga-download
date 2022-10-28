@@ -1,10 +1,10 @@
-# Generate bash-script to download manga
+# Generate script to download manga
 
-Browser extension that generates bash-script that downloads manga and converts to PDF. 
+Browser extension can generate script to download and convert manga to PDF. 
 
 Supports:
-* `mangabook.org`
-* `w13.mangafreak.net`
+* `mangabook.org` bash-script
+* `w13.mangafreak.net` bash-script
 
 ## Instructions
 

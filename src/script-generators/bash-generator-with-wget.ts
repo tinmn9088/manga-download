@@ -1,9 +1,9 @@
 import type { Volume } from "~src/models/volume";
-import type { BashGenerator } from "./bash-generator";
+import type { ScriptGenerator } from "./script-generator";
 
-export abstract class BashGeneratorWithWget implements BashGenerator {
+export abstract class BashGeneratorWithWget implements ScriptGenerator {
 
-  generateWget(volumes: Volume[]): string[] {
+  generateDownload(volumes: Volume[]): string[] {
     let volumeNumberLength: number = Math.max(...volumes.map(volume => volume.number.length));
     let chapterNumberLength: number = Math.max(...volumes.map(volume => volume.urls.length.toString().length)); 
     let result: string[] = [];
@@ -24,6 +24,10 @@ export abstract class BashGeneratorWithWget implements BashGenerator {
     });
 
     return result;
+  }
+
+  getFileExtenstion(): string {
+    return "sh";
   }
 
   abstract generateBeginning(): string[];

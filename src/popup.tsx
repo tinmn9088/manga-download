@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import type { BashGenerator } from "./bash-generators/bash-generator";
+import type { ScriptGenerator } from "./script-generators/script-generator";
 import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {
@@ -11,7 +11,7 @@ function IndexPopup() {
     tempLink.click();
   }
 
-  function handleOnClick(event: any) {
+  function onClick(event: any) {
     chrome.tabs.query({active: true, currentWindow: true, lastFocusedWindow: true}, function(tabs) {
       let currentUrl: string = tabs[0].url;
       let warning: HTMLElement = document.getElementById("warning");
@@ -40,14 +40,14 @@ function IndexPopup() {
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value;
             let title: string = (document.getElementById("titleInput") as HTMLInputElement).value;
 
-            let bashGenerator: BashGenerator = SupportedUrl.get(response.url).bashGenerator();
+            let scriptGenerator: ScriptGenerator = SupportedUrl.get(response.url).scriptGenerator();
             let result: string[] = []
-              .concat(bashGenerator.generateBeginning())
-              .concat(bashGenerator.generateWget(response.volumes))
-              .concat(bashGenerator.generateConvert({title: title || "Author", author: author || "Title"}));
+              .concat(scriptGenerator.generateBeginning())
+              .concat(scriptGenerator.generateDownload(response.volumes))
+              .concat(scriptGenerator.generateConvert({title: title || "Author", author: author || "Title"}));
 
             let content: Blob = new Blob([result.join("\n")], {type: "text/plain"});
-            saveFile(`${author ? author.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}${title ? title.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}manga-download.sh`, content);
+            saveFile(`${author ? author.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}${title ? title.replace(/[^\w]/gi, "_").toLocaleLowerCase() + "-" : ""}manga-download.${scriptGenerator.getFileExtenstion()}`, content);
           }, 2000);
         }        
       });
@@ -71,7 +71,7 @@ function IndexPopup() {
         <small id="titleHelp" className="form-text text-muted">"Title" by default.</small>
       </div>
       <div className="alert d-none" role="alert" id="warning">Volumes found: </div>
-      <button type="button" className="btn btn-dark" onClick={handleOnClick}>Generate</button>
+      <button type="button" className="btn btn-dark" onClick={onClick}>Generate</button>
     </form>
   );
 }
