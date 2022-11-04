@@ -12,19 +12,19 @@ export class SupportedUrl {
   static {
     this.set(/^https:\/\/mangabook\.org.*/,
                 () => new MangabookOrgDOMVolumeParser(),
-                () => new MangabookOrgBashGenerator());
+                [() => new MangabookOrgBashGenerator()]);
     this.set(/^https:\/\/w13\.mangafreak\.net.*/,
                 () => new W13MangafreakNetDOMVolumeParser(15),
-                () => new W13MangafreakNetBashGenerator());  
+                [() => new W13MangafreakNetBashGenerator()]);  
   }
 
   private constructor(public readonly urlRegExp: RegExp,
                       public readonly domVolumeParser: () => DOMVolumeParser, 
-                      public readonly scriptGenerator: () => ScriptGenerator) {
+                      public readonly scriptGenerators: (() => ScriptGenerator)[]) {
   }
 
-  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, scriptGenerator: () => ScriptGenerator) {
-    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, scriptGenerator);
+  static set(urlRegExp: RegExp, domVolumeParser: () => DOMVolumeParser, scriptGenerators: (() => ScriptGenerator)[]) {
+    let newUrl: SupportedUrl = new SupportedUrl(urlRegExp, domVolumeParser, scriptGenerators);
     SupportedUrl.values.set(urlRegExp, newUrl);
   }
 

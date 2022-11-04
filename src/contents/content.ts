@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
   console.log("Manga download content script loaded.", location.href);
   
   chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
+    (request, sender, sendResponse) => {
       let currentUrl: string = location.href;
       let domVolumeParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
 
@@ -19,9 +19,9 @@ window.addEventListener("load", () => {
         throw new Error(`No DOMVolumeParser found (${currentUrl})`);
       }
 
-      let response: {volumes: Volume[], url: string} = {volumes: domVolumeParser.parse(), url: currentUrl};
-      console.log("Response", response);
-      sendResponse(response);
+      let volumes: Volume[] = domVolumeParser.parse();
+      console.log("Volumes", volumes);
+      sendResponse(volumes);
     }
   ); 
 });

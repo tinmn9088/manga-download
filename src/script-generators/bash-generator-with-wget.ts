@@ -1,5 +1,7 @@
 import type { Volume } from "~src/models/volume";
 import type { ScriptGenerator } from "./script-generator";
+import { ScriptType } from "./script-type";
+import scriptTypeFileExtension from "./script-type-file-extension";
 
 export abstract class BashGeneratorWithWget implements ScriptGenerator {
 
@@ -26,8 +28,12 @@ export abstract class BashGeneratorWithWget implements ScriptGenerator {
     return result;
   }
 
-  getFileExtenstion(): string {
-    return "sh";
+  get type(): ScriptType {
+    return ScriptType.Bash;
+  }
+
+  get fileExtension(): string {
+    return scriptTypeFileExtension.get(this.type);
   }
 
   abstract generateBeginning(): string[];
