@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import type { FormEvent } from "react";
 import type { Volume } from "./models/volume";
-import type { ScriptGenerator } from "./script-generators/script-generator";
 import { ScriptType } from "./script-generators/script-type";
 import { SupportedUrl } from "./supported-url";
 

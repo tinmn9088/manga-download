@@ -1,6 +1,6 @@
 import { BashGeneratorWithWget } from "./bash-generator-with-wget";
 
-export class W13MangafreakNetBashGenerator extends BashGeneratorWithWget {
+export class MangafreakNetBashGenerator extends BashGeneratorWithWget {
 
   generateBeginning(): string[] {
     let result: string[] = [];

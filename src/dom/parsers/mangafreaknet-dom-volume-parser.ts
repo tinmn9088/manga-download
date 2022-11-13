@@ -2,7 +2,7 @@ import type { Chapter } from "../../models/chapter";
 import type { Volume } from "../../models/volume";
 import type { DOMVolumeParser } from "./dom-volume-parser";
 
-export class W13MangafreakNetDOMVolumeParser implements DOMVolumeParser {
+export class MangafreakNetDOMVolumeParser implements DOMVolumeParser {
 
   constructor(private _volumeSize: number) {
   }

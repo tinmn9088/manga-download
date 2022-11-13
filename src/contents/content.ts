@@ -4,7 +4,7 @@ import type { Volume } from "../models/volume";
 import type { DOMVolumeParser } from "../dom/parsers/dom-volume-parser";
 
 export const config: PlasmoContentScript = {
-  matches: ["https://mangabook.org/*", "https://w13.mangafreak.net/*"]
+  matches: ["https://mangabook.org/*", "https://*.mangafreak.net/*"]
 };
 
 window.addEventListener("load", () => {
@@ -14,6 +14,8 @@ window.addEventListener("load", () => {
     (request, sender, sendResponse) => {
       let currentUrl: string = location.href;
       let domVolumeParser: DOMVolumeParser = SupportedUrl.get(currentUrl)?.domVolumeParser();
+      console.log(domVolumeParser);
+      
 
       if (!domVolumeParser) {
         throw new Error(`No DOMVolumeParser found (${currentUrl})`);

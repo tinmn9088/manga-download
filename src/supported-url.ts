@@ -1,8 +1,8 @@
 import { MangabookOrgBashGenerator } from "./script-generators/mangabookorg-bash-generator";
-import { W13MangafreakNetBashGenerator } from "./script-generators/w13mangafreaknet-bash-generator";
+import { MangafreakNetBashGenerator } from "./script-generators/mangafreaknet-bash-generator";
 import type { ScriptGenerator } from "./script-generators/script-generator";
 import { MangabookOrgDOMVolumeParser } from "./dom/parsers/mangabookorg-dom-volume-parser";
-import { W13MangafreakNetDOMVolumeParser } from "./dom/parsers/w13mangafreaknet-dom-volume-parser";
+import { MangafreakNetDOMVolumeParser } from "./dom/parsers/mangafreaknet-dom-volume-parser";
 import type { DOMVolumeParser } from "./dom/parsers/dom-volume-parser";
 
 export class SupportedUrl {
@@ -13,9 +13,9 @@ export class SupportedUrl {
     this.set(/^https:\/\/mangabook\.org.*/,
                 () => new MangabookOrgDOMVolumeParser(),
                 [() => new MangabookOrgBashGenerator()]);
-    this.set(/^https:\/\/w13\.mangafreak\.net.*/,
-                () => new W13MangafreakNetDOMVolumeParser(15),
-                [() => new W13MangafreakNetBashGenerator()]);  
+    this.set(/^https:\/\/.*\.mangafreak\.net.*/,
+                () => new MangafreakNetDOMVolumeParser(15),
+                [() => new MangafreakNetBashGenerator()]);  
   }
 
   private constructor(public readonly urlRegExp: RegExp,
