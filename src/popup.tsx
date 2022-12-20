@@ -6,12 +6,15 @@ import { SupportedUrl } from "./supported-url";
 
 function IndexPopup() {
 
-  function getSelected(selectEl: HTMLSelectElement): ScriptType[] {
+  function getSelected(checkboxContainer: HTMLDivElement): ScriptType[] {
     let selected: ScriptType[] = [];
-    let options: HTMLOptionElement[] = [...selectEl.querySelectorAll("option")];
-    options = options.filter(option => option.selected);
-    options.map(option => option.value)
+    let checkedCheckboxes: HTMLInputElement[] = [...checkboxContainer.querySelectorAll(":checked")] as HTMLInputElement[];
+    console.log(checkedCheckboxes);
+    
+    checkedCheckboxes.map(option => option.value)
     .forEach(option => selected.push(ScriptType[option]));  
+
+    console.log(selected);
     return selected;
   }
 
@@ -26,7 +29,7 @@ function IndexPopup() {
     chrome.tabs.query({active: true, currentWindow: true, lastFocusedWindow: true}).then(tabs => {
       let supportedUrl: SupportedUrl = SupportedUrl.get(tabs[0].url);
       let warningEl: HTMLElement = document.getElementById("warning");
-      let typeSelectEl: HTMLSelectElement = document.getElementById("typeSelect") as HTMLSelectElement;
+      let typeListEl: HTMLDivElement = document.getElementById("typeList") as HTMLDivElement;
       
       warningEl.classList.remove("alert-danger");
       warningEl.classList.remove("alert-success");
@@ -53,7 +56,7 @@ function IndexPopup() {
             let author: string = (document.getElementById("authorInput") as HTMLInputElement).value;
             let title: string = (document.getElementById("titleInput") as HTMLInputElement).value;
 
-            let types: ScriptType[] = getSelected(typeSelectEl);
+            let types: ScriptType[] = getSelected(typeListEl);
             supportedUrl.scriptGenerators
             .map(create => create())
             .filter(generator => types.includes(generator.type))
@@ -76,20 +79,30 @@ function IndexPopup() {
 
   chrome.tabs.query({active: true, currentWindow: true, lastFocusedWindow: true}).then(tabs => {
     let supportedUrl: SupportedUrl = SupportedUrl.get(tabs[0].url);
-    let typeSelectEl: HTMLElement = document.getElementById("typeSelect");    
+    let typeListEl: HTMLElement = document.getElementById("typeList");    
 
     let supportedScriptTypes: ScriptType[] = supportedUrl?.scriptGenerators
     .map(create => create())
     .map(generator => generator.type)
     || [];
 
+    let firstCheckboxChecked = false;
     for (const type of supportedScriptTypes) {
-      let optionEl: HTMLOptionElement = document.createElement("option");
-      optionEl.value = type;
-      optionEl.innerHTML = type;
-      typeSelectEl.appendChild(optionEl);
+      let formCheckEl: HTMLDivElement = document.createElement("div");
+      let labelEl: HTMLLabelElement = document.createElement("label");
+      let checkboxEl: HTMLInputElement = document.createElement("input");
+      
+      formCheckEl.classList.add("form-check");
+      labelEl.classList.add("form-check-label");
+      checkboxEl.classList.add("form-check-input");
+      checkboxEl.type = "checkbox";
+      if (!firstCheckboxChecked) checkboxEl.checked = firstCheckboxChecked = true;
+      labelEl.innerText = `${type}`;
+      checkboxEl.value = type;
+      formCheckEl.appendChild(labelEl);
+      labelEl.appendChild(checkboxEl);
+      typeListEl.appendChild(formCheckEl);
     }
-    if (supportedScriptTypes.length > 0) (typeSelectEl.firstChild as HTMLOptionElement).selected = true;
   });
 
   return (
@@ -108,13 +121,9 @@ function IndexPopup() {
         </label>
         <small id="titleHelp" className="form-text text-muted">"Title" by default.</small>
       </div>
-      <div className="form-group row mb-4">
-        <label>
-          Type
-          <select className="form-select mt-1" multiple size={1} id="typeSelect">
-          </select>
-        </label>
-      </div>
+      <label className="container row mt-2 mb-4" id="typeList">
+        Scripts
+      </label>
       <div className="alert d-none" role="alert" id="warning">Volumes found: </div>
       <button className="btn btn-dark">Generate</button>
     </form>
